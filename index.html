@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Nurasha Prabashwara - Portfolio</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <!-- AOS Animation CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+  
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: #0f172a; /* Tailwind slate-900 */
+      color: #e0e7ff; /* Tailwind indigo-200 */
+    }
+    /* Hamburger icon styles */
+    .hamburger {
+      cursor: pointer;
+      width: 30px;
+      height: 25px;
+      position: relative;
+      display: inline-block;
+    }
+    .hamburger span {
+      background: #a78bfa;
+      position: absolute;
+      height: 3px;
+      width: 100%;
+      border-radius: 2px;
+      transition: all 0.3s ease;
+      left: 0;
+    }
+    .hamburger span:nth-child(1) {
+      top: 0;
+    }
+    .hamburger span:nth-child(2) {
+      top: 11px;
+    }
+    .hamburger span:nth-child(3) {
+      bottom: 0;
+    }
+    .hamburger.active span:nth-child(1) {
+      transform: rotate(45deg);
+      top: 11px;
+    }
+    .hamburger.active span:nth-child(2) {
+      opacity: 0;
+    }
+    .hamburger.active span:nth-child(3) {
+      transform: rotate(-45deg);
+      bottom: 11px;
+    }
+
+    /* Navbar cat circle */
+    .cat-circle {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(128,0,255,0.9), rgba(35,0,65,0.8));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: float 4s ease-in-out infinite;
+      margin-right: 14px;
+      box-shadow: 0 0 10px rgba(128, 0, 255, 0.8);
+      border: 2px solid #7c3aed;
+      user-select: none;
+    }
+    .cat-img {
+      width: 36px;
+      height: 36px;
+    }
+    @keyframes float {
+      0% { transform: translateY(0) translateX(0); }
+      50% { transform: translateY(-8px) translateX(6px); }
+      100% { transform: translateY(0) translateX(0); }
+    }
+
+    /* Hero base style */
+    .hero-bg-gradient {
+      position: relative;
+      overflow: hidden;
+      transition: background 1s ease;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 9rem 1.5rem 3rem;
+      color: #d8b4fe; /* light purple text */
+      font-weight: 800;
+      box-shadow: inset 0 0 150px rgba(124, 58, 237, 0.6);
+    }
+
+    /* Predefined hero backgrounds for nav buttons */
+    .bg-hero-home {
+      background: linear-gradient(270deg, #1e293b, #4338ca, #7c3aed, #1e293b);
+      background-size: 600% 600%;
+      animation: bgMove 15s ease infinite;
+    }
+    .bg-hero-about {
+      background: linear-gradient(270deg, #0f172a, #0ea5e9, #7dd3fc, #0f172a);
+      background-size: 600% 600%;
+      animation: bgMove 20s ease infinite;
+      color: #bae6fd; /* lighter text */
+    }
+    .bg-hero-projects {
+      background: linear-gradient(270deg, #1e293b, #16a34a, #4ade80, #1e293b);
+      background-size: 600% 600%;
+      animation: bgMove 18s ease infinite;
+      color: #bbf7d0;
+    }
+    .bg-hero-news {
+      background: linear-gradient(270deg, #1e293b, #facc15, #fde68a, #1e293b);
+      background-size: 600% 600%;
+      animation: bgMove 20s ease infinite;
+      color: #fef3c7;
+    }
+    .bg-hero-video {
+      background: linear-gradient(270deg, #1e293b, #db2777, #f9a8d4, #1e293b);
+      background-size: 600% 600%;
+      animation: bgMove 20s ease infinite;
+      color: #fbcfe8;
+    }
+    .bg-hero-contact {
+      background: linear-gradient(270deg, #1e293b, #ea580c, #fdba74, #1e293b);
+      background-size: 600% 600%;
+      animation: bgMove 22s ease infinite;
+      color: #fed7aa;
+    }
+
+    @keyframes bgMove {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+    /* Button hover animation */
+    .btn-indigo {
+      background: #7c3aed;
+      transition: background 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 0 5px #7c3aed;
+    }
+    .btn-indigo:hover {
+      background: #a78bfa;
+      box-shadow: 0 0 15px #a78bfa;
+    }
+
+    /* Project cards bounce on hover */
+    .project-card {
+      transition: transform 0.4s cubic-bezier(.68,-0.55,.27,1.55), box-shadow 0.3s ease;
+      cursor: pointer;
+      will-change: transform;
+      border: 1px solid transparent;
+      border-radius: 1rem;
+      background: rgba(67, 56, 202, 0.15);
+      backdrop-filter: blur(8px);
+      box-shadow: 0 4px 6px rgba(124, 58, 237, 0.3);
+    }
+    .project-card:hover {
+      transform: translateY(-12px) scale(1.05);
+      box-shadow: 0 12px 30px rgba(124, 58, 237, 0.6);
+      border-color: #7c3aed;
+      background: rgba(124, 58, 237, 0.25);
+    }
+
+    /* News cards scale and shadow */
+    .news-card {
+      background-color: #1a1a1a;
+      color: #e0e7ff;
+      border-radius: 0.75rem;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: default;
+      padding: 1.5rem;
+      box-shadow: 0 4px 6px rgba(124, 58, 237, 0.2);
+      border: 1px solid transparent;
+    }
+    .news-card:hover {
+      transform: scale(1.03);
+      box-shadow: 0 15px 35px rgba(124, 58, 237, 0.7);
+      border-color: #7c3aed;
+      background-color: #2c2c2c;
+    }
+
+    /* Video iframe zoom on hover */
+    .video-container iframe {
+      border-radius: 1rem;
+      box-shadow: 0 0 20px rgba(124, 58, 237, 0.4);
+      transition: transform 0.3s ease;
+    }
+    .video-container iframe:hover {
+      transform: scale(1.02);
+      box-shadow: 0 0 30px rgba(124, 58, 237, 0.7);
+    }
+
+    /* Contact form inputs focus glow */
+    input, textarea {
+      background-color: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 0.5rem;
+      padding: 0.75rem 1rem;
+      color: #e0e7ff;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    input:focus, textarea:focus {
+      outline: none;
+      border-color: #7c3aed;
+      box-shadow: 0 0 8px #7c3aed;
+      background-color: #2e3a62;
+    }
+
+    /* Nav link active style */
+    nav ul li a.active {
+      color: #a78bfa;
+      font-weight: 700;
+      text-decoration: underline;
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <header class="fixed w-full bg-slate-900 shadow-lg z-50" data-aos="fade-down" data-aos-duration="1000">
+    <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center p-4">
+      <div class="flex items-center">
+        <div class="cat-circle" title="Nurasha Prabashwara">
+          <img src="pinterestdownloader.com-1753265732.315626.gif" alt="Cat Face" class="cat-img" />
+        </div>
+        <h1 class="text-indigo-400 font-extrabold text-xl select-none">Nurasha Prabashwara</h1>
+      </div>
+
+      <!-- Hamburger menu button (visible on small screens) -->
+     
+
+      <!-- Navigation Menu -->
+      <nav id="nav-menu" class="w-full sm:w-auto mt-4 sm:mt-0 hidden sm:flex">
+        <ul id="nav-list" class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-6 text-gray-300 font-semibold text-center sm:text-left">
+          <li><a href="#home" data-hero="home" class="hover:text-indigo-400 transition-colors duration-300 active">Home</a></li>
+          <li><a href="#about" data-hero="about" class="hover:text-indigo-400 transition-colors duration-300">About</a></li>
+          <li><a href="#projects" data-hero="projects" class="hover:text-indigo-400 transition-colors duration-300">Projects</a></li>
+          <li><a href="news.html" data-hero="news" class="hover:text-indigo-400 transition-colors duration-300">News</a></li>
+          <li><a href="#video" data-hero="video" class="hover:text-indigo-400 transition-colors duration-300">Video</a></li>
+          <li><a href="contact.html" data-hero="contact" class="hover:text-indigo-400 transition-colors duration-300">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section id="home" class="hero-bg-gradient bg-hero-home relative">
+    <div data-aos="fade-up" data-aos-duration="1500" class="max-w-3xl mx-auto text-center px-6">
+      <h1 class="text-6xl font-extrabold mb-4 drop-shadow-lg">Hi, I'm Nurasha</h1>
+      <p class="text-xl text-indigo-200 drop-shadow-md">Cybersecurity Enthusiast & Designer</p>
+    </div>
+    <!-- Subtle glowing circles in background -->
+    <span class="absolute rounded-full bg-indigo-600 opacity-40 blur-3xl w-60 h-60 top-10 left-20 animate-pulse"></span>
+    <span class="absolute rounded-full bg-purple-500 opacity-30 blur-2xl w-40 h-40 bottom-32 right-24 animate-pulse delay-500"></span>
+  </section>
+
+  <!-- About Section -->
+  <section id="about" class="max-w-4xl mx-auto py-20 px-6 text-center" data-aos="fade-up" data-aos-duration="1200">
+    <h2 class="text-4xl font-extrabold text-indigo-400 mb-6">About Me</h2>
+    <p class="text-indigo-200 leading-relaxed text-lg max-w-3xl mx-auto">
+       My name is Nurasha Prabashwara Darmakeerthi
+undegraduate software engineer
+
+My name is Nurasha Prabashwara Darmakeerthi, an undergraduate Software Engineering student with a deep passion for building smart, impactful software solutions. I have a strong foundation in programming, problem-solving, and software development, and I love turning complex challenges into clean, efficient code.
+
+I'm skilled in Python, Java, and C++, and familiar with tools such as Git, SQL, and core web technologies like HTML, CSS, and JavaScript.
+
+Currently, I'm expanding my knowledge in the field of Cybersecurity, diving into ethical hacking, digital forensics, and secure system design — because I believe secure code is just as important as smart code.
+
+With a curious mindset and a commitment to continuous learning, I aim to grow into a well-rounded software engineer who builds not just functional, but secure and meaningful digital experiences.
+    </p>
+  </section>
+
+  <!-- Projects Section -->
+  <section id="projects" class="bg-slate-900 py-20 px-6" data-aos="fade-up" data-aos-duration="1300">
+    <div class="max-w-6xl mx-auto text-center">
+      <h2 class="text-4xl font-extrabold text-indigo-400 mb-12">Projects</h2>
+      <div class="grid gap-10 grid-cols-1 md:grid-cols-3">
+        <div class="project-card p-8">
+          <h3 class="text-2xl font-semibold mb-4 text-white">Portfolio Website</h3>
+          <p class="text-indigo-300">Modern personal portfolio built with Tailwind CSS and JavaScript.</p>
+        </div>
+        <div class="project-card p-8">
+          <h3 class="text-2xl font-semibold mb-4 text-white">Cybersecurity Tools</h3>
+          <p class="text-indigo-300">A collection of penetration testing and ethical hacking utilities.</p>
+        </div>
+        <div class="project-card p-8">
+          <h3 class="text-2xl font-semibold mb-4 text-white">UI/UX Designs</h3>
+          <p class="text-indigo-300">Creative app interfaces designed in Figma & Adobe XD.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- News Section -->
+  <section id="news" class="bg-black py-20 px-6" data-aos="fade-up" data-aos-duration="1400">
+    <div class="max-w-6xl mx-auto">
+      <h2 class="text-4xl font-extrabold text-indigo-400 mb-12 text-center">Latest News</h2>
+      <div class="grid gap-8 grid-cols-1 md:grid-cols-3">
+        <div class="news-card" data-aos="zoom-in" data-aos-duration="900">
+          <h3 class="text-xl font-semibold mb-3 text-indigo-300">Joined Cyber Conference 2025</h3>
+          <p>Selected as guest speaker on ethical hacking trends and cybersecurity innovations.</p>
+        </div>
+        <div class="news-card" data-aos="zoom-in" data-aos-duration="900" data-aos-delay="150">
+          <h3 class="text-xl font-semibold mb-3 text-indigo-300">New Figma UI Pack Released</h3>
+          <p>Released a clean and modern dashboard template pack for designers.</p>
+        </div>
+        <div class="news-card" data-aos="zoom-in" data-aos-duration="900" data-aos-delay="300">
+          <h3 class="text-xl font-semibold mb-3 text-indigo-300">HackTheBox Ranking Up</h3>
+          <p>Moved up 3 levels on HTB in under 1 month by practicing penetration testing challenges.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Video Section -->
+<section id="video" class="py-20 px-6 bg-slate-900" data-aos="fade-up" data-aos-duration="1500">
+  <div class="max-w-4xl mx-auto text-center">
+    <h2 class="text-4xl font-extrabold text-indigo-400 mb-8">Watch Cybersecurity</h2>
+
+    <div class="bg-black p-4 rounded-xl overflow-hidden shadow-lg">
+      <video id="cyber-video" class="w-full rounded-lg" muted playsinline>
+        <source src="Pinterest.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+
+  </div>
+</section>
+
+<script>
+  // Autoplay video when it comes into view
+  const video = document.getElementById('cyber-video');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        video.play();
+      } else {
+        video.pause();
+      }
+    });
+  }, {
+    threshold: 0.5 // Play when 50% of the video is visible
+  });
+
+  observer.observe(video);
+</script>
+
+
+
+  <!-- AOS script -->
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+  
+  <script>
+    AOS.init({
+      once: true,
+      easing: 'ease-in-out',
+      duration: 800,
+      delay: 100,
+    });
+
+    // Navbar hamburger toggle
+    const hamburgerBtn = document.getElementById('hamburger-btn');
+    const navMenu = document.getElementById('nav-menu');
+
+    hamburgerBtn.addEventListener('click', () => {
+      navMenu.classList.toggle('hidden');
+      hamburgerBtn.classList.toggle('active');
+      // Update aria-expanded attribute
+      const expanded = hamburgerBtn.getAttribute('aria-expanded') === 'true';
+      hamburgerBtn.setAttribute('aria-expanded', !expanded);
+    });
+
+    // Change hero background color on nav click and handle internal scrolling
+    const heroSection = document.querySelector('.hero-bg-gradient');
+    const navLinks = document.querySelectorAll('#nav-list a');
+
+    navLinks.forEach(link => {
+      link.addEventListener('click', e => {
+        const href = link.getAttribute('href');
+        if(href.startsWith('#')) {
+          e.preventDefault();
+
+          // Remove active class from all links
+          navLinks.forEach(l => l.classList.remove('active'));
+          // Add active class to clicked link
+          link.classList.add('active');
+
+          // Change hero background based on data-hero attribute
+          const hero = link.getAttribute('data-hero');
+          heroSection.className = 'hero-bg-gradient bg-hero-' + hero;
+
+          // Scroll smoothly to section
+          const targetSection = document.querySelector(href);
+          if(targetSection) {
+            targetSection.scrollIntoView({ behavior: 'smooth' });
+          }
+
+          // Close nav menu on mobile after clicking
+          if(!navMenu.classList.contains('hidden')) {
+            navMenu.classList.add('hidden');
+            hamburgerBtn.classList.remove('active');
+            hamburgerBtn.setAttribute('aria-expanded', 'false');
+          }
+        }
+        // For external links (news.html, contact.html), default behavior
+      });
+    });
+  </script>
+
+</body>
+</html>
